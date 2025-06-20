@@ -1,49 +1,84 @@
-import { Text, View, StyleSheet, SafeAreaView, StatusBar, TextInput } from 'react-native';
-import { useState } from 'react';
+import { Text, View, StyleSheet, SafeAreaView, Button, TextInput, Switch, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { use, useState } from 'react';
 
 export default function App() {
-    const [name, setName] = useState("");
-
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
     return (
-        <SafeAreaView style={styles.container}>
-            <TextInput 
-                style={styles.input} 
-                value={name} 
-                onChangeText={setName} // ✅ fixed this line
-                placeholder="Enter your name"
-            />
+        <KeyboardAvoidingView 
+            behavior='padding' 
+            style={styles.container}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+        >
+            <View style={styles.form}>
+                <Image source={require("../assets/images/adaptive-icon.png")} style={styles.image}/>
+                <Text style={styles.label}>Username</Text>
+                <TextInput 
+                    style={styles.input} 
+                    placeholder='Enter your user name'
+                    value={username}
+                    onChangeText={setUsername}
+                />
+                    
 
-            <TextInput
-                style = {[styles.input, styles.multilineText]}
-                placeholder='message'
-                multiline
-            />
-            <Text style={styles.text}>My name is {name}</Text>
-        </SafeAreaView>
+                <Text style={styles.label}>Pasword</Text>
+                <TextInput 
+                    style={styles.input}
+                    placeholder='Enter yur password' 
+                    secureTextEntry
+                    value={password}
+                    onChangeText={setPassword}
+                />
+
+                <Button 
+                    title="Login" 
+                    onPress={() => {}}
+                />
+            </View>
+        </KeyboardAvoidingView>
     );
 }
+   
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
         justifyContent: "center",
-        paddingTop: StatusBar.currentHeight || 0, // fallback for iOS
+        paddingHorizontal: 20,
+        backgroundColor: "#f5f5f5",
+    },
+    form: {
+        backgroundColor: "white",
+        padding: 20,
+        borderRadius: 10,
+        // borderWidth: 1,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+    },
+    label: {
+        fontSize: 16,
+        marginBottom: 5,
+        fontWeight: "bold",
     },
     input: {
         height: 40,
-        margin: 12,
-        padding: 10,
+        borderColor: "#ddd",
         borderWidth: 1,
-        width: 250,
-    },
-    text: {
-        fontSize: 30,
+        marginBottom: 15,
         padding: 10,
+        borderRadius: 5,
     },
-    multilineText: {
-        minHeight: 100,
-        textAlignVertical: "top",
-    }
+    image: {
+        width: 200,
+        height: 200,
+        alignSelf: "center",
+        marginBottom: 50,
+    },
+
 });
