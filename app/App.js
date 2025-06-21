@@ -2,8 +2,20 @@ import { Text, View, StyleSheet, SafeAreaView, Button, TextInput, Switch, Image,
 import { use, useState } from 'react';
 
 export default function App() {
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        let errors = {};
+
+        if (!username) errors.username = "User name is required";
+        if (!password) errors.password = "Password is required";
+
+        setErrors(errors);
+
+        return Object.keys(errors).length === 0;
+    };
     return (
         <KeyboardAvoidingView 
             behavior='padding' 
@@ -19,7 +31,9 @@ export default function App() {
                     value={username}
                     onChangeText={setUsername}
                 />
-                    
+                {
+                    errors.username ? <Text style = {styles.errorText}>{errors.username}</Text> : null
+                }
 
                 <Text style={styles.label}>Pasword</Text>
                 <TextInput 
@@ -29,7 +43,9 @@ export default function App() {
                     value={password}
                     onChangeText={setPassword}
                 />
-
+                {
+                    errors.password ? <Text style = {styles.errorText}>{errors.password}</Text> : null
+                }
                 <Button 
                     title="Login" 
                     onPress={() => {}}
@@ -80,5 +96,8 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         marginBottom: 50,
     },
-
+    errorText: {
+        color: "red",
+        paddingBottom: 10,
+    },
 });
